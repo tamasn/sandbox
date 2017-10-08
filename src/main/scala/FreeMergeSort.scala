@@ -16,9 +16,9 @@ object FreeMergeSort {
 
   @tailrec
   def merge[A](acc: List[A], lh: List[A], rh: List[A])(implicit o: Ordering[A]): List[A] = (lh, rh) match {
-    case (Nil, Nil) => acc.reverse
-    case (Nil, rh)  => acc.reverse ++ rh
-    case (lh, Nil)  => acc.reverse ++ lh
+    case (Nil, Nil)     => acc.reverse
+    case (Nil, r :: rs) => merge(r :: acc, Nil, rs)
+    case (l :: ls, Nil) => merge(l :: acc, ls, Nil)
     case (lh @ l :: ls, rh @ r :: rs) =>
       if (o.lteq(l, r))
         merge(l :: acc, ls, rh)
